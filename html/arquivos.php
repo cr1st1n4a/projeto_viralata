@@ -6,6 +6,7 @@
       PedidoAdocaoController.php    // Controlador para gerenciar solicitações de adoção
       MedicamentoController.php      // Controlador para manipulação de dados de medicamentos (CRUD)
     /views/
+      login/usuario.html   Welysson
       index.html                    // Página inicial que exibe a lista de animais
       criar.html                    // Formulário para cadastrar um novo animal
       adotar.html                    // Formulário para solicitar a adoção de um animal
