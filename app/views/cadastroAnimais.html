@@ -1,0 +1,173 @@
+{% extends "main.html" %}
+{% block main %}
+<div class="container mt-5">
+    <form id="cadastroAnimais" class="form-horizontal" enctype="multipart/form-data">
+        <input type="hidden" id="id" name="id" value="{{ id }}">
+        <input type="hidden" id="acao" name="acao" value="{{ acao }}">
+        <div class="card">
+            <div class="card-header">
+                <h4>{{ titulo }}</h4>
+            </div>
+            <div class="card-body">
+
+                <h5>Informações Básicas</h5>
+                <div class="form-group row">
+                    <label for="nome" class="col-sm-2 col-form-label">Nome do Animal:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="nome" name="nome" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="especie" class="col-sm-2 col-form-label">Espécie:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="especie" name="especie" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="raca" class="col-sm-2 col-form-label">Raça:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="raca" name="raca" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="idade" class="col-sm-2 col-form-label">Idade:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="idade" name="idade" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="sexo" class="col-sm-2 col-form-label">Sexo:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="sexo" name="sexo" required>
+                            <option value="" disabled selected>Selecione</option>
+                            <option value="macho">Macho</option>
+                            <option value="femea">Fêmea</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="data_nascimento" class="col-sm-2 col-form-label">Data de Nascimento:</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+                    </div>
+                </div>
+
+                <h5>Características Físicas</h5>
+                <div class="form-group row">
+                    <label for="porte" class="col-sm-2 col-form-label">Porte:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="porte" name="porte" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="cor" class="col-sm-2 col-form-label">Cor:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="cor" name="cor" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="pelagem" class="col-sm-2 col-form-label">Pelagem:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="pelagem" name="pelagem" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="marcacoes" class="col-sm-2 col-form-label">Marcações:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="marcacoes" name="marcacoes">
+                    </div>
+                </div>
+
+                <h5>Histórico de Saúde</h5>
+                <div class="form-group row">
+                    <label for="vacinas" class="col-sm-2 col-form-label">Histórico de Vacinação:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="vacinas" name="vacinas" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="tratamentos" class="col-sm-2 col-form-label">Tratamentos:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="tratamentos" name="tratamentos" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="doencas" class="col-sm-2 col-form-label">Doenças Prévias:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="doencas" name="doencas" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <h5>Fotos e Vídeos</h5>
+                <div class="form-group row">
+                    <label for="fotos" class="col-sm-2 col-form-label">Adicionar Fotos:</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control-file" id="fotos" name="fotos[]" multiple accept="image/*">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="video" class="col-sm-2 col-form-label">Adicionar Vídeo:</label>
+                    <div class="col-sm-10">
+                        <input type="url" class="form-control" id="video" name="video" placeholder="URL do vídeo (YouTube, etc.)">
+                    </div>
+                </div>
+
+                <h5>Dados do Proprietário</h5>
+                <div class="form-group row">
+                    <label for="proprietario_nome" class="col-sm-2 col-form-label">Nome do Proprietário:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="proprietario_nome" name="proprietario_nome" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="proprietario_contato" class="col-sm-2 col-form-label">Contato do Proprietário:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="proprietario_contato" name="proprietario_contato" required>
+                    </div>
+                </div>
+
+                <h5>Outras Informações</h5>
+                <div class="form-group row">
+                    <label for="peso" class="col-sm-2 col-form-label">Peso (kg):</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="peso" name="peso" step="0.1" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="microchip" class="col-sm-2 col-form-label">Número do Microchip:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="microchip" name="microchip">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="observacoes" class="col-sm-2 col-form-label">Observações:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="observacoes" name="observacoes" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="text-right">
+                    <button type="submit" id="btnCadastrarAnimal" class="btn btn-primary">Cadastrar Animal</button>
+                    <a href="/animais/lista" class="btn btn-secondary">Voltar à Lista</a>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+<script src="/js/cadastro.js"></script>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "main.html" %}
+
+{% block main %}
+<div class="container mt-5">
+    <h4>{{ titulo }}</h4>
+    <div id="animal-list" class="row">
+        {% if animais %}
+            {% for animal in animais %}
+            <div class="col-md-4 animal-card mb-4">
+                <div class="card">
+                    {% if animal.fotos and animal.fotos|length > 0 %}
+                    <img src="{{ animal.fotos[0] }}" class="card-img-top" alt="Foto de {{ animal.nome }}">
+                {% else %}
+                    <img src="caminho/para/imagem/default.jpg" class="card-img-top" alt="Imagem padrão">
+                {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ animal.nome }}</h5>
+                        <p class="card-text">Espécie: {{ animal.especie }}</p>
+                        <p class="card-text">Raça: {{ animal.raca }}</p>
+                        <p class="card-text">Idade: {{ animal.idade }} anos</p>
+                        <p class="card-text">Status: {{ animal.status }}</p>
+                        <button class="btn btn-warning" data-id="{{ animal.id }}" onclick="editAnimal(this)">Editar</button>
+                        <button class="btn btn-danger" data-id="{{ animal.id }}" onclick="deleteAnimal(this)">Excluir</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>Nenhum animal encontrado.</p>
+        {% endif %}
+    </div>
+</div>
+<script src="/js/cadastro.js"></script>
+{% endblock %}
