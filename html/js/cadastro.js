@@ -2,6 +2,8 @@ document.getElementById('cadastroAnimais').addEventListener('submit', async func
     event.preventDefault(); // Evitar o envio padrão do formulário
 
     const formData = new FormData(this);
+    
+    console.log('Form Data:', formData); // Debug: Mostra os dados do formulário
 
     try {
         const response = await fetch('/animais/cadastro', {

@@ -97,17 +97,10 @@ class ControllerAnimal extends Base
     {
         try {
             $form = $request->getParsedBody();
-            
-            // Processar o upload das fotos
-            $fotos = $_FILES['fotos'];
-            $fotos_urls = [];
 
-            foreach ($fotos['tmp_name'] as $key => $tmp_name) {
-                $file_name = basename($fotos['name'][$key]);
-                $target_file = 'caminho/do/diretorio/' . $file_name; // Defina o caminho correto
-                move_uploaded_file($tmp_name, $target_file);
-                $fotos_urls[] = $target_file; // Armazenar a URL
-            }
+            // Processar o upload das fotos
+            $fotos_urls = $this->processUploads($_FILES['fotos'], 'imagens/');
+            $video_url = $this->processVideoUpload($_FILES['video'], 'videos/');
 
             $data = [
                 'nome' => filter_var($form['nome'], FILTER_SANITIZE_STRING),
@@ -124,7 +117,7 @@ class ControllerAnimal extends Base
                 'tratamentos' => filter_var($form['tratamentos'], FILTER_SANITIZE_STRING),
                 'doencas' => filter_var($form['doencas'], FILTER_SANITIZE_STRING),
                 'fotos' => json_encode($fotos_urls), // Armazenar como JSON
-                'video' => filter_var($form['video'], FILTER_SANITIZE_STRING),
+                'video' => $video_url, // Armazenar a URL do vídeo
                 'proprietario_nome' => filter_var($form['proprietario_nome'], FILTER_SANITIZE_STRING),
                 'proprietario_contato' => filter_var($form['proprietario_contato'], FILTER_SANITIZE_STRING),
                 'peso' => filter_var($form['peso'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION),
@@ -141,6 +134,61 @@ class ControllerAnimal extends Base
         } catch (\Exception $e) {
             return $this->jsonResponse($response, false, 'Erro: ' . $e->getMessage(), 500);
         }
+    }
+
+    private function processUploads($files, $directory)
+    {
+        $urls = [];
+        $maxFileSize = 2 * 1024 * 1024; // Limite de 2MB para cada arquivo
+
+        foreach ($files['tmp_name'] as $key => $tmp_name) {
+            if ($files['error'][$key] !== UPLOAD_ERR_OK) {
+                throw new \Exception('Erro ao fazer upload da foto: ' . $files['name'][$key] . ' (Erro: ' . $files['error'][$key] . ')');
+            }
+
+            if ($files['size'][$key] > $maxFileSize) {
+                throw new \Exception('O arquivo ' . $files['name'][$key] . ' excede o tamanho máximo permitido de 2MB.');
+            }
+
+            $file_name = basename($files['name'][$key]);
+            $file_name = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $file_name); // Sanitização do nome do arquivo
+            $target_file = $directory . $file_name;
+
+            // Validação do tipo de arquivo
+            $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
+            $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+
+            if (in_array($file_type, $allowed_types) && move_uploaded_file($tmp_name, $target_file)) {
+                $urls[] = $target_file; // Armazenar a URL
+            } else {
+                throw new \Exception('Erro ao fazer upload da foto: ' . $file_name);
+            }
+        }
+        return $urls;
+    }
+
+    private function processVideoUpload($file, $directory)
+    {
+        if ($file['error'] === UPLOAD_ERR_OK) {
+            if ($file['size'] > 10 * 1024 * 1024) { // Limite de 10MB para o vídeo
+                throw new \Exception('O arquivo ' . $file['name'] . ' excede o tamanho máximo permitido de 10MB.');
+            }
+
+            $file_name = basename($file['name']);
+            $file_name = preg_replace('/[^a-zA-Z0-9_\-\.]/', '_', $file_name); // Sanitização do nome do arquivo
+            $target_file = $directory . $file_name;
+
+            // Validação do tipo de arquivo
+            $file_type = pathinfo($target_file, PATHINFO_EXTENSION);
+            $allowed_types = ['mp4', 'avi', 'mov'];
+
+            if (in_array($file_type, $allowed_types) && move_uploaded_file($file['tmp_name'], $target_file)) {
+                return $target_file; // Retorna a URL do vídeo
+            } else {
+                throw new \Exception('Erro ao fazer upload do vídeo: ' . $file_name);
+            }
+        }
+        return null; // Caso não haja vídeo, retorna null
     }
 
     public function jsonResponse($response, $success, $message, $statusCode)

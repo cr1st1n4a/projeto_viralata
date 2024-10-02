@@ -6,13 +6,13 @@
     <div id="animal-list" class="row">
         {% if animais %}
             {% for animal in animais %}
-            <div class="col-md-4 animal-card mb-4">
+            <div class="col-md-4 animal-card mb-4" data-especie="{{ animal.especie }}" data-status="{{ animal.status }}">
                 <div class="card">
                     {% if animal.fotos and animal.fotos|length > 0 %}
                     <img src="{{ animal.fotos[0] }}" class="card-img-top" alt="Foto de {{ animal.nome }}">
-                {% else %}
-                    <img src="caminho/para/imagem/default.jpg" class="card-img-top" alt="Imagem padrão">
-                {% endif %}
+                    {% else %}
+                    <img src="app/imagens/default.jpg" class="card-img-top" alt="Imagem padrão">
+                    {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ animal.nome }}</h5>
                         <p class="card-text">Espécie: {{ animal.especie }}</p>

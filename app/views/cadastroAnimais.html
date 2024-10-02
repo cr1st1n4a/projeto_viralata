@@ -14,28 +14,28 @@
                 <div class="form-group row">
                     <label for="nome" class="col-sm-2 col-form-label">Nome do Animal:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="nome" name="nome" required>
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome do animal" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="especie" class="col-sm-2 col-form-label">Espécie:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="especie" name="especie" required>
+                        <input type="text" class="form-control" id="especie" name="especie" placeholder="Espécie do animal" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="raca" class="col-sm-2 col-form-label">Raça:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="raca" name="raca" required>
+                        <input type="text" class="form-control" id="raca" name="raca" placeholder="Raça do animal" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="idade" class="col-sm-2 col-form-label">Idade:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="idade" name="idade" required>
+                        <input type="number" class="form-control" id="idade" name="idade" placeholder="Idade do animal" required>
                     </div>
                 </div>
 
@@ -61,28 +61,28 @@
                 <div class="form-group row">
                     <label for="porte" class="col-sm-2 col-form-label">Porte:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="porte" name="porte" required>
+                        <input type="text" class="form-control" id="porte" name="porte" placeholder="Porte do animal" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="cor" class="col-sm-2 col-form-label">Cor:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="cor" name="cor" required>
+                        <input type="text" class="form-control" id="cor" name="cor" placeholder="Cor do animal" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="pelagem" class="col-sm-2 col-form-label">Pelagem:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="pelagem" name="pelagem" required>
+                        <input type="text" class="form-control" id="pelagem" name="pelagem" placeholder="Tipo de pelagem" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="marcacoes" class="col-sm-2 col-form-label">Marcações:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="marcacoes" name="marcacoes">
+                        <input type="text" class="form-control" id="marcacoes" name="marcacoes" placeholder="Marcações especiais">
                     </div>
                 </div>
 
@@ -90,21 +90,21 @@
                 <div class="form-group row">
                     <label for="vacinas" class="col-sm-2 col-form-label">Histórico de Vacinação:</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" id="vacinas" name="vacinas" rows="3"></textarea>
+                        <textarea class="form-control" id="vacinas" name="vacinas" rows="3" placeholder="Descreva o histórico de vacinação"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="tratamentos" class="col-sm-2 col-form-label">Tratamentos:</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" id="tratamentos" name="tratamentos" rows="3"></textarea>
+                        <textarea class="form-control" id="tratamentos" name="tratamentos" rows="3" placeholder="Descreva os tratamentos realizados"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="doencas" class="col-sm-2 col-form-label">Doenças Prévias:</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" id="doencas" name="doencas" rows="3"></textarea>
+                        <textarea class="form-control" id="doencas" name="doencas" rows="3" placeholder="Liste as doenças prévias"></textarea>
                     </div>
                 </div>
 
@@ -112,14 +112,16 @@
                 <div class="form-group row">
                     <label for="fotos" class="col-sm-2 col-form-label">Adicionar Fotos:</label>
                     <div class="col-sm-10">
-                        <input type="file" class="form-control-file" id="fotos" name="fotos[]" multiple accept="image/*">
+                        <input type="file" class="form-control-file" id="fotos" name="fotos[]" multiple accept="image/*" required>
+                        <small class="form-text text-muted">Você pode adicionar múltiplas imagens (JPG, PNG, etc.)</small>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="video" class="col-sm-2 col-form-label">Adicionar Vídeo:</label>
                     <div class="col-sm-10">
-                        <input type="url" class="form-control" id="video" name="video" placeholder="URL do vídeo (YouTube, etc.)">
+                        <input type="url" class="form-control" id="video" name="video" placeholder="URL do vídeo (YouTube, etc.)" pattern="https?://.+" title="Insira uma URL válida">
+                        <small class="form-text text-muted">Insira a URL do vídeo (por exemplo, YouTube)</small>
                     </div>
                 </div>
 
@@ -127,14 +129,14 @@
                 <div class="form-group row">
                     <label for="proprietario_nome" class="col-sm-2 col-form-label">Nome do Proprietário:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="proprietario_nome" name="proprietario_nome" required>
+                        <input type="text" class="form-control" id="proprietario_nome" name="proprietario_nome" placeholder="Nome do proprietário" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="proprietario_contato" class="col-sm-2 col-form-label">Contato do Proprietário:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="proprietario_contato" name="proprietario_contato" required>
+                        <input type="text" class="form-control" id="proprietario_contato" name="proprietario_contato" placeholder="Contato do proprietário" required>
                     </div>
                 </div>
 
@@ -142,21 +144,21 @@
                 <div class="form-group row">
                     <label for="peso" class="col-sm-2 col-form-label">Peso (kg):</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control" id="peso" name="peso" step="0.1" required>
+                        <input type="number" class="form-control" id="peso" name="peso" step="0.1" placeholder="Peso do animal" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="microchip" class="col-sm-2 col-form-label">Número do Microchip:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="microchip" name="microchip">
+                        <input type="text" class="form-control" id="microchip" name="microchip" placeholder="Número do microchip">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="observacoes" class="col-sm-2 col-form-label">Observações:</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" id="observacoes" name="observacoes" rows="3"></textarea>
+                        <textarea class="form-control" id="observacoes" name="observacoes" rows="3" placeholder="Observações adicionais"></textarea>
                     </div>
                 </div>
 
