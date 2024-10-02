@@ -6,34 +6,19 @@ use app\database\Connection;
 
 class DeleteQuery
 {
-    private static $tabela;
-    private $where = [];
-    private $binds = [];
-    public static function table(string $table): self
+    private string $table;
+    private array $where = [];
+    private array $binds = [];
+
+    public static function table(string $table)
     {
         $self = new self;
-        $self->tabela = $table;
+        $self->table = $table;
         return $self;
     }
-    private function createQuery()
+
+    public function where(string $field, string $operator, string|int $value, ?string $logic = null)
     {
-        if (!$this->tabela) {
-            throw new \Exception("A consulta precisa invocar o método delete.");
-        }
-        $query = '';
-        $query = "delete from {$this->tabela} ";
-        $query .= (isset($this->where) and (count($this->where) > 0)) ? ' where ' . implode(' ', $this->where) : '';
-        return $query;
-    }
-    public function executeQuery($query)
-    {
-        $connection = Connection::open();
-        $prepare = $connection->prepare($query);
-        return $prepare->execute($this->binds ?? []);
-    }
-    public function where(string $field, string $operator, string|int $value, ?string $logic = null): self
-    {
-        $placeHolder = '';
         $placeHolder = $field;
         if (str_contains($placeHolder, '.')) {
             $placeHolder = substr($field, strpos($field, '.') + 1);
@@ -42,13 +27,29 @@ class DeleteQuery
         $this->binds[$placeHolder] = $value;
         return $this;
     }
-    public function delete(): bool
+
+    private function createQuery()
+    {
+        if (!$this->table) {
+            throw new \Exception("A consulta precisa invocar o método table.");
+        }
+
+        $query = "delete from {$this->table}";
+        if (count($this->where) > 0) {
+            $query .= ' WHERE ' . implode(' ', $this->where);
+        }
+        return $query;
+    }
+
+    public function delete()
     {
         $query = $this->createQuery();
         try {
-            return $this->executeQuery($query);
+            $connection = Connection::open();
+            $prepare = $connection->prepare($query);
+            return $prepare->execute($this->binds ?? []);
         } catch (\PDOException $e) {
-            throw new \Exception("Restrição: {$e->getMessage()}");
+            throw new \Exception("Restrição: {$e->getMessage()}, SQL: " . $query);
         }
     }
 }

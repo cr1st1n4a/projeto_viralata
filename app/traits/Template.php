@@ -20,4 +20,4 @@ trait Template
     {
         return $name . EXT_VIEWS;
     }
-}    
+}

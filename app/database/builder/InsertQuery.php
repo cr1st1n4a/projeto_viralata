@@ -6,20 +6,18 @@ use app\database\Connection;
 
 class InsertQuery
 {
-    private string $table;
-
-    public static function table(string $tableName): self
+    private static $table;
+    public static function table(string $tableName = '')
     {
-        $instance = new self;
-        $instance->table = $tableName;
-        return $instance;
+        $classe_atual = new self;
+        $classe_atual->table = $tableName;
+        return $classe_atual;
     }
-
-    public function save(array $valores): bool
+    public function save(array $valores = [])
     {
         $campos = implode(',', array_keys($valores));
         $parametros = ':' . implode(',:', array_keys($valores));
-        $sql = "INSERT INTO {$this->table} ($campos) VALUES ($parametros)";
+        $sql = "insert into {$this->table} ($campos) values ($parametros)";
         $connection = Connection::open();
         $prepare = $connection->prepare($sql);
         return $prepare->execute($valores);

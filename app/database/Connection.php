@@ -1,48 +1,43 @@
 <?php
 
 namespace app\database;
-
+//faz uso da biblioteca PDO
 use PDO;
-
+//cria a classe Connection
 class Connection
-{
-    #Variável de conexão com banco de dados.
+{ //mantém a conexão com o banco de dados aberta ao final do script
     private static $pdo = null;
+    //cria a =
     public static function open(): PDO
     {
-        #Verifica se a conexão já existe e retorna se sim
-        if (static::$pdo) {
-            return static::$pdo;
-        }
-        #Define as opções de conexão
-        $options = [
-            # Configurar modo de tratamento de erros
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            # Modo de busca de dados (associativo)
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            # Desativar emulação de prepared statements 
-            PDO::ATTR_EMULATE_PREPARES => false,
-            # Desativar conexão persistente (otimização de memória)
-            PDO::ATTR_PERSISTENT => false,
-            # Retornar strings como strings
-            PDO::ATTR_STRINGIFY_FETCHES => false,
-        ];
         try {
-            $dsn = 'pgsql:host=localhost;port=5432;dbname=senac';
-            #Caso a conexão com banco de dados não exista criamos, uma nova conexão.
-            static::$pdo = new PDO($dsn, 'cr1st1n4a', 'c09262824', $options);
-            #Permite a captura e o salvamento de acentuação no banco
+            #verifica se existe a conexão e retorna se sim
+            if (static::$pdo) {
+                return static::$pdo;
+            }
+            #define opções de conexão
+            $options = [
+                #configura modo de tratamento de erros
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                #define o modo padrão de busca de dados. No caso abaixo foi utilizado o array associativo (fetch_assoc)
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                #desativa emulação de prepared statements
+                PDO::ATTR_EMULATE_PREPARES => false,
+                #ativa conexão persistente (otimização de memória)
+                PDO::ATTR_PERSISTENT => true,
+                #força o uso de strings na requisição de busca  
+                PDO::ATTR_STRINGIFY_FETCHES => true,
+            ];
+            //atribui o valor da classe PDO para a variável PDO. Por conveção é esperado nos campos a seguir o local do host e porta onde será feita a conexão,
+            //o nome do banco de dados, login e usuário do banco de dados. No caso abaixo também, foi carregada a variárel $options para determinar as opções de conexão 
+            static::$pdo = new PDO('pgsql:host=localhost;port=5432;dbname=cursosenac', 'guilhermebsilva', 'guilherme10', $options);
+            //executa um comando externo, SET NAMES é uma declaração SQL que autoriza o uso de acentos e caracteres especiais 
             static::$pdo->exec("SET NAMES 'utf8'");
-            #Caso seja bem-sucedida a conexão retornamos a variável $pdo;
             return static::$pdo;
         } catch (\PDOException $e) {
-            #Lança uma exceção ou uma mensagem de erro.
-            throw new \PDOException("Restrição: " . $e->getMessage(), 1);
+            var_dump($e->getMessage());
+            //lança exceção ou mensagem de erro
+            throw new \PDOException("ERRO ERRO ERRO ERRO ERRO ERRO ERRO" . $e->getMessage());
         }
     }
-}
-try {
-    $db = Connection::open();
-} catch (\Exception $e) {
-    echo "Erro: " . $e->getMessage();
 }

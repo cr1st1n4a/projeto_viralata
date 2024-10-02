@@ -1,0 +1,160 @@
+{% extends "main.html" %}
+{% block main %}
+
+<div class="col-12">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Início</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Adotantes</li>
+        </ol>
+</div>
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <button type="button" data-bs-toggle="modal" data-bs-target="#modal_resgate" class="btn btn-success">Novo
+                resgate</a>
+        </div>
+        <div class="card-body">
+            <form id="form" name="form">
+                <table class="table table-striped table-hover table-bordered" id="tabela">
+                    <thead>
+                        <tr>
+                            <td>Código</td>
+                            <td>Nome completo</td>
+                            <td>Contato</td>
+                            <td>Endereço</td>
+                            <td>Bairro</td>
+                            <td>Espécie</td>
+                            <td>Sexo</td>
+                            <td>Urgência</td>
+                            <td>Observações</td>
+                            <td>Ações</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in resgates %}
+                        <tr id="tr{{item.id}}">
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.nome }}</td>
+                            <td>{{ item.contato }}</td>
+                            <td>{{ item.endereco }}</td>
+                            <td>{{ item.bairro }}</td>
+                            <td>{{ item.especie }}</td>
+                            <td>{{ item.sexo }}</td>
+                            <td>{{ item.urgencia }}</td>
+                            <td>{{ item.observacoes }}</td>
+                            <td>
+                                <a href="/disciplina/alterar/{{ item.id }}" class="btn btn-primary">Alterar</a>
+                                <button type="button" class="btn btn-danger"
+                                    onclick="Delete('{{ item.id }}');">Excluir</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal para criação de cliente -->
+
+
+<div class="modal fade" id="modal_resgate" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Pedidos de Resgate</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+
+            <!-- body do modal de cadastro -->
+            <div class="modal-body">
+                <form id="form_cadastro_resgate">
+
+
+                    <!-- Informações pessoais -->
+                    <div class="form-floating mb-4">
+                        <input type="text" id="nome" name="nome" class="form-control" required />
+                        <label for="nome">Nome completo</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="text" id="contato" name="contato" class="form-control" required />
+                        <label for="contato">Contato</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="text" id="endereco" name="endereco" class="form-control" />
+                        <label for="endereco">Endereço</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <input type="tel" id="bairro" name="bairro" class="form-control" required />
+                        <label for="bairro">Bairro</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <select class="form-select" id="especie" name="especie" aria-label="Espécie" required>
+                            <option value="" disabled selected>Escolha uma opção abaixo:</option>
+                            <option value="cachorro">Cão</option>
+                            <option value="gato">Gato</option>
+                        </select>
+                        <label for="especie">Espécie</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <select class="form-select" name="sexo" id="sexo" aria-label="Sexo" required>
+                            <option value="" disabled selected>Escolha uma opção abaixo:</option>
+                            <option value="macho">Macho</option>
+                            <option value="femea">Fêmea</option>
+                            <option value="desconhecido">Desconhecido</option>
+                        </select>
+                        <label for="sexo">Sexo</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <select class="form-select" name="urgencia" id="urgencia" aria-label="Grau de Urgência"
+                            required>
+                            <option value="" disabled selected>Escolha uma opção abaixo:</option>
+                            <option value="alta">Alta</option>
+                            <option value="media">Média</option>
+                            <option value="baixa">Baixa</option>
+                        </select>
+                        <label for="urgencia">Grau de Urgência</label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <textarea class="form-control" placeholder="Observações gerais:" id="observacoes" style="height: 100px"
+                            required></textarea>
+                        <label for="obs">Observações</label>
+                    </div>
+
+
+                    <!-- Botão de cadastro / sair -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sair</button>
+                        <button type="button" id="btncadastroresgate"
+                            class="btn btn-primary btn-block">Cadastrar</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<script src="/js/cadastro_resgate.js"></script>
+<script src="/js/lista.js"></script>
+{% endblock %}

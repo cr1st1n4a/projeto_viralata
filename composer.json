@@ -4,6 +4,11 @@
             "app\\": "app/"
         }
     },
+    "authors": [
+        {
+            "name": "veli"
+        }
+    ],
     "require": {
         "slim/slim": "^4.14",
         "slim/twig-view": "^3.4",
